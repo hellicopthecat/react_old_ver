@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function Food(props) {
   return <h1>I'm a {props.more}</h1>;
@@ -6,20 +7,26 @@ function Food(props) {
 function Drinks({what}) {
   return <h1>I'm a {what}</h1>;
 }
-function Whatmatch({match, whatdrink}) {
+function Whatmatch({match, whatdrink, rating}) {
   return (
     <div>
-      <h1>
+      <h2>
         {match} && {whatdrink}
-      </h1>
+      </h2>
+      <h3>{rating} / 5</h3>
     </div>
   );
 }
 const foodList = [
-  {name: "chicken", with: "beer"},
-  {name: "row Fish", with: "soju"},
+  {id: 1, name: "chicken", with: "beer", rating: 4},
+  {id: 2, name: "pizza", with: "wine", rating: 4},
+  {id: 3, name: "row Fish", with: "soju", rating: 5},
 ];
-
+Whatmatch.propTypes = {
+  name: PropTypes.string,
+  with: PropTypes.string,
+  rating: PropTypes.number,
+};
 function App() {
   return (
     <div>
@@ -27,7 +34,12 @@ function App() {
       <Food more="cheese" />
       <Drinks what="coffee" />
       {foodList.map((current) => (
-        <Whatmatch match={current.name} whatdrink={current.with} />
+        <Whatmatch
+          key={current.id}
+          match={current.name}
+          whatdrink={current.with}
+          rating={current.rating}
+        />
       ))}
     </div>
   );
